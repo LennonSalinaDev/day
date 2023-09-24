@@ -1,0 +1,141 @@
+:root {
+--verde-google: #78BB7B;
+--verde-vibrante: #1abc9c;
+--roxo-vibrante: #9b59b6;
+--cinza-palido: #ecf0f1;
+--cinza-claro: #d5dbdb;
+--verde-agradavel: #2ecc71;
+--laranja-agradavel: #e67e22;
+--vermelho: rgba(244, 20, 20, 0.879);
+--amarelo: rgba(248, 248, 8, 0.941);
+--azul: #3498db;
+}
+body {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: var(--verde-google);
+}
+.task{
+  top: 1rem;
+}
+#ass{
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  color: var(--roxo-vibrante);
+}
+.draggable-element {
+  display: inline-block; /* Faz os elementos ficarem lado a lado */
+  width: 100px;
+  height: 100px;
+  /* background-color: #3498db; */
+  color: black;
+  text-align: center;
+  border-radius: 1rem;
+  line-height: 100px;
+  position: absolute; /* Posiciona os elementos de forma absoluta */
+  cursor: move;
+  margin-right: 10px; /* Adiciona uma margem entre os elementos */
+  /* ... Outros estilos ... */
+transform-style: preserve-3d;
+transition: transform 0.6s;
+}
+.draggable-element.frente {
+  /* background-color: #3498db; */
+  transform: rotateY(0deg);
+}
+.draggable-element.verso {
+  /* background-color: rgba(52, 152, 219, 0.7); */ /* Cor da face verso com opacidade */
+  transform: rotateY(180deg);
+}
+#area-exclusao {
+  position: fixed;
+  background-color: rgba(104, 102, 102, 0.299);
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  bottom: 2rem;
+  right: 2rem;
+  max-width: 30%; /* Definindo uma largura máxima em relação à largura da tela */
+  max-height: 30%; /* Definindo uma altura máxima em relação à altura da tela */
+  box-sizing: border-box; /* Para incluir padding e borda na largura e altura máximas */
+  border-radius: 1rem;
+}
+#area-input {
+  width: 300px; /* Largura da área do input */
+  height: 100px; /* Altura da área do input */
+  border: 1px solid black; /* Borda para visualização */
+}
+
+/* button {
+padding: 10px 20px;
+font-size: 20px;
+cursor: pointer;
+border: none;
+border-radius: 5px;
+color: white;
+} */
+
+.trocarBtn {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: black;
+  margin-bottom: 10px; /* Apenas para separar os botões */
+}
+
+.trocarBtn:hover {
+  opacity: 0.8;
+}
+.verso {
+  color: transparent; /* Oculta o texto tornando a cor transparente */
+}
+
+/* Estilos para os botões de rádio e suas respectivas cores */
+
+/* Estilizando a borda dos botões de rádio */
+#radio1, #radio2, #radio3, #radio4 {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  /* border: 2px solid #0000003b; */
+}
+#radio1{
+  border: 2px solid var(--cinza-palido);
+}
+#radio2{
+  border: 2px solid var(--vermelho);
+}
+#radio3{
+  border: 2px solid var(--amarelo);
+}
+#radio4{
+  border: 2px solid var(--azul);
+}
+
+#radio1:checked {
+  background-color: var(--cinza-palido);
+  border: 2px solid var(--cinza-palido);
+}
+
+#radio2:checked {
+  background-color: var(--vermelho);
+  border: 2px solid var(--vermelho);
+}
+
+#radio3:checked {
+  background-color: var(--amarelo);
+  border: 2px solid var(--amarelo);
+}
+
+#radio4:checked {
+  background-color: var(--azul);
+  border: 2px solid var(--azul);
+}
