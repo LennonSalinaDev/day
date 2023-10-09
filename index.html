@@ -9,24 +9,57 @@
 </head>
 <body>
 <div class="task">
-    <div id="area-input">
-      <input type="text" id="element-name" placeholder="Nome do Elemento">
-      <button onclick="criarElemento()">CRIAR</button>
-      <button onclick="virarTodasAsCartas()">Virar Todas</button>
-      <br>
-      <label for="radio1">cor 1</label>
-      <input type="radio" id="radio1" name="grupoRadio" onchange="habilitarBotaoCriar()">
-      <label for="radio2">cor 2</label>
-      <input type="radio" id="radio2" name="grupoRadio" onchange="habilitarBotaoCriar()">
-      <label for="radio3">cor 3</label>
-      <input type="radio" id="radio3" name="grupoRadio" onchange="habilitarBotaoCriar()">
-      <label for="radio4">cor 4</label>
-      <input type="radio" id="radio4" name="grupoRadio" onchange="habilitarBotaoCriar()">
+    <div id="area-input"> <!-- temporariamente sem parametros -->
 
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" id="element-name" placeholder="Nome" aria-label="Nome" aria-describedby="button-addon2">
+        <button class="btn btn-outline-light" type="button" id="button-addon2" onclick="criarElemento()">CRIAR</button>
+      </div>
+
+      <button type="button" class="btn btn-outline-light" onclick="virarTodasAsCartas()">Virar Todas</button>
+
+      <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+
+      <label class="btn btn-outline-success" for="btn-check-outlined">Pessoa</label><br>
+
+      <br>
+      <label for="radio1">+</label>
+      <input type="radio" id="radio1" name="grupoRadio" onchange="habilitarBotaoCriar()">
+      <label for="radio2">+</label>
+      <input type="radio" id="radio2" name="grupoRadio" onchange="habilitarBotaoCriar()">
+      <label for="radio3">+</label>
+      <input type="radio" id="radio3" name="grupoRadio" onchange="habilitarBotaoCriar()">
+      <label for="radio4">+</label>
+      <input type="radio" id="radio4" name="grupoRadio" onchange="habilitarBotaoCriar()">
 
     </div>
 </div>
 <div id="area-exclusao"></div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Selecione a cor para <span id="elementNamePlaceholder"></span>
+        </h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" id="closeModalButton">
+          <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-primary opcao-modal custom-modal-button" onclick="selecionarOpcao(1)"></button>
+          <button class="btn btn-primary opcao-modal custom-modal-button" onclick="selecionarOpcao(2)"></button>
+          <button class="btn btn-primary opcao-modal custom-modal-button" onclick="selecionarOpcao(3)"></button>
+          <button class="btn btn-primary opcao-modal custom-modal-button" onclick="selecionarOpcao(4)"></button>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -35,5 +68,3 @@
 
 </body>
 </html>
-
-

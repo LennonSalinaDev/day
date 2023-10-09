@@ -17,6 +17,8 @@ function habilitarBotaoCriar() {
 // Chama a função para garantir o estado inicial do botão ao carregar a página
 habilitarBotaoCriar();
 
+let elementoSelecionado = null; // Variável para armazenar o elemento selecionado
+
 function criarElemento() {
     // Verifica se alguma carta está virada e impede a criação de um novo elemento
     const elementos = document.querySelectorAll('.draggable-element');
@@ -36,6 +38,20 @@ function criarElemento() {
       var novoElemento = $('<div class="draggable-element frente" style="background-color: ' + corSelecionada + '">' + nomeElemento + '</div>');
       novoElemento.appendTo('body');
       novoElemento.addClass('frente'); // Adiciona classe para a frente do elemento
+
+      // Armazena o nome do elemento no próprio elemento
+      novoElemento.data('nomeElemento', nomeElemento);
+
+      // Verifica se a caixa de seleção 'Pessoa' está marcada
+      const checkboxPessoa = document.getElementById('btn-check-outlined');
+      const isPessoaChecked = checkboxPessoa.checked;
+
+       // Adiciona ou remove a classe .icon-person conforme a marcação da caixa de seleção
+      if (isPessoaChecked) {
+          novoElemento.addClass('icon-person');
+      } else {
+          novoElemento.removeClass('icon-person');
+      }
   
       novoElemento.on('touchstart mousedown', function(event) {
         event.preventDefault(); // Evita o comportamento padrão dos eventos
@@ -63,6 +79,30 @@ function criarElemento() {
           verificarExclusao(novoElemento);
         });
       });
+      // Adicionando evento de duplo clique para exibir o modal
+      let toqueCount = 0;
+let ultimoToqueTempo = 0;
+
+novoElemento.on('click touchstart', function() {
+  const agora = new Date().getTime();
+
+  elementoSelecionado = novoElemento; // Armazena a referência do elemento ao ser clicado
+  
+
+  // Se o último toque foi há mais de 0,3 segundos, resete a contagem
+  if (agora - ultimoToqueTempo > 300) {
+    toqueCount = 0;
+  }
+
+  toqueCount++;
+  ultimoToqueTempo = agora;
+
+  // Se for o segundo toque (duplo toque) dentro de 0,3 segundos, chama a função exibirModal()
+  if (toqueCount === 2) {
+    exibirModal();
+    toqueCount = 0;  // Reseta o contador de toques para o próximo duplo toque
+  }
+});
 
       // Resetar a seleção dos botões de rádio e limpar o input
       $('input[name="grupoRadio"]').prop('checked', false);
@@ -71,7 +111,22 @@ function criarElemento() {
     }
 }
 
-  function verificarExclusao(elemento) {
+function exibirModal() {
+  // Obtém o nome do elemento do data armazenado no elemento
+  const nomeElemento = elementoSelecionado.data('nomeElemento');
+
+  $('#elementNamePlaceholder').text(nomeElemento);
+  $('#myModal').addClass('modal-pequeno').modal('show'); // Adiciona a classe 'modal-pequeno'
+}
+function alterarCorCarta() {
+  const elementos = document.querySelectorAll('.draggable-element');
+
+  elementos.forEach(elemento => {
+    elemento.style.backgroundColor = '#ecf0f1';
+  });
+}
+
+function verificarExclusao(elemento) {
     var areaExclusao = $('#area-exclusao')[0].getBoundingClientRect();
   
     // Verifica a interseção do elemento com a área de exclusão
@@ -102,12 +157,23 @@ function criarElemento() {
     let algumaCartaVirada = false;  // Variável para verificar se alguma carta está virada
 
     elementos.forEach(elemento => {
-        // Atualiza a condição para virar as cartas
         if (cartasViradas) {
+            // Armazena a cor original antes de virar a carta
+            if (!elemento.classList.contains('verso')) {
+                elemento.dataset.corOriginal = elemento.style.backgroundColor;
+            }
+
             elemento.classList.add('verso');
+            elemento.style.backgroundColor = 'var(--preto)'; // Define a cor rgba quando a carta está virada
             algumaCartaVirada = true;
         } else {
             elemento.classList.remove('verso');
+
+            // Restaura a cor original se existe
+            const corOriginal = elemento.dataset.corOriginal;
+            if (corOriginal) {
+                elemento.style.backgroundColor = corOriginal;
+            }
         }
 
         elemento.classList.toggle('frente');
@@ -128,3 +194,35 @@ function criarElemento() {
         $('input[name="grupoRadio"]').prop('disabled', true);
     }
 }
+
+function selecionarOpcao(opcao) {
+  console.log('Opção selecionada:', opcao);
+
+  // Altera a cor de fundo do botão correspondente
+  $(`.opcao-modal:eq(${opcao - 1})`).toggleClass('opcao-selecionada');
+
+  // Marca o rádio correspondente
+  $(`#radio${opcao}`).prop('checked', true);
+
+  if (opcao === 1 && elementoSelecionado) {
+    elementoSelecionado.css('background-color', '#ecf0f1');
+  }else if(opcao === 2 && elementoSelecionado){
+    elementoSelecionado.css('background-color', 'rgba(244, 20, 20, 0.879)');
+  }else if(opcao === 3 && elementoSelecionado){
+    elementoSelecionado.css('background-color', 'rgba(248, 248, 8, 0.941');
+  }else if(opcao === 4 && elementoSelecionado){
+    elementoSelecionado.css('background-color', '#3498db');
+  }
+  // Obtenha o nome do elemento
+  var elementName = nomeElemento;  // Altere isso conforme a lógica para obter o nome do elemento
+  // Atualize o conteúdo do span com o nome do elemento
+  $('#elementNamePlaceholder').text(elementName);
+
+  // Fechar o modal
+  $('#myModal').modal('hide');
+}
+$(document).ready(function() {
+  $('#closeModalButton').click(function() {
+    $('#myModal').modal('hide');
+  });
+});
