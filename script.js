@@ -226,3 +226,19 @@ $(document).ready(function() {
     $('#myModal').modal('hide');
   });
 });
+function moverElementos() {
+  // Selecione todos os elementos criados
+  const elementos = document.querySelectorAll('.draggable-element');
+
+  // Para cada elemento, gere uma nova posição aleatória dentro dos limites da tela
+  elementos.forEach(elemento => {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    const randomX = Math.random() * (screenWidth - elemento.offsetWidth);
+    const randomY = Math.random() * (screenHeight - elemento.offsetHeight);
+
+    // Anima a transição do elemento para a nova posição com duração de 5 segundos
+    $(elemento).animate({ top: randomY, left: randomX }, 500);
+  });
+}
